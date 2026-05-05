@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechBazar — Eletrônicos usados que valem a pena</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --border: #262626;
+      --accent: #d4ff00;
+      --accent-dim: #a8cc00;
+      --text: #f5f5f5;
+      --text-dim: #a3a3a3;
+    }
+    * { font-family: 'Space Grotesk', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      background-image:
+        radial-gradient(circle at 20% 0%, rgba(212, 255, 0, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 100%, rgba(212, 255, 0, 0.05) 0%, transparent 40%);
+    }
+    .grid-bg {
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -20px rgba(212, 255, 0, 0.3);
+    }
+    .accent-text { color: var(--accent); }
+    .accent-bg { background: var(--accent); color: #000; }
+    .pill {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .pill:hover, .pill.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .glitch {
+      position: relative;
+      display: inline-block;
+    }
+    .glitch::before {
+      content: attr(data-text);
+      position: absolute;
+      left: 2px;
+      top: 0;
+      color: var(--accent);
+      opacity: 0.6;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .float { animation: float 4s ease-in-out infinite; }
+    .scroll-marquee {
+      animation: scroll 30s linear infinite;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .product-img {
+      background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .product-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(212, 255, 0, 0.1), transparent 60%);
+    }
+    input::placeholder { color: var(--text-dim); }
+    .badge-condition {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- HEADER -->
+  <header class="border-b border-[var(--border)] sticky top-0 z-50 backdrop-blur-xl bg-black/60">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 accent-bg flex items-center justify-center font-bold text-lg rounded-sm">T</div>
+        <span class="text-xl font-bold tracking-tight">TechBazar<span class="accent-text">.</span></span>
+      </div>
+      <nav class="hidden md:flex gap-8 text-sm text-[var(--text-dim)]">
+        <a href="#" class="hover:text-white transition">Explorar</a>
+        <a href="#" class="hover:text-white transition">Vender</a>
+        <a href="#" class="hover:text-white transition">Como funciona</a>
+        <a href="#" class="hover:text-white transition">Suporte</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button class="text-sm text-[var(--text-dim)] hover:text-white transition hidden sm:block">Entrar</button>
+        <button class="accent-bg px-4 py-2 rounded-sm font-semibold text-sm hover:bg-[var(--accent-dim)] transition flex items-center gap-2">
+          🛒 <span class="mono text-xs">[0]</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 grid-bg opacity-40"></div>
+    <div class="relative max-w-7xl mx-auto px-6 py-20 md:py-28">
+      <div class="mono text-xs text-[var(--text-dim)] mb-6 tracking-widest">
+        // MARKETPLACE_001 / ELETRÔNICOS USADOS
+      </div>
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tighter mb-6">
+        Tecnologia<br>
+        <span class="accent-text">de segunda</span><br>
+        <span class="text-[var(--text-dim)]">primeira mão.</span>
+      </h1>
+      <p class="text-lg md:text-xl text-[var(--text-dim)] max-w-2xl mb-10">
+        Compre e venda eletrônicos usados sem enrolação. Anúncios verificados, preços honestos, entrega rastreada.
+      </p>
+
+      <!-- BARRA DE BUSCA -->
+      <div class="max-w-3xl">
+        <div class="card rounded-sm p-2 flex items-center gap-2">
+          <div class="px-4 text-[var(--text-dim)]">🔍</div>
+          <input
+            type="text"
+            placeholder="iPhone 13, PlayStation 5, MacBook Pro..."
+            class="flex-1 bg-transparent outline-none py-3 text-base"
+          />
+          <button class="accent-bg px-6 py-3 rounded-sm font-semibold text-sm hover:bg-[var(--accent-dim)] transition whitespace-nowrap">
+            Buscar →
+          </button>
+        </div>
+
+        <!-- TAGS RÁPIDAS -->
+        <div class="flex flex-wrap gap-2 mt-5">
+          <span class="mono text-xs text-[var(--text-dim)] self-center mr-2">populares:</span>
+          <button class="pill">Celulares</button>
+          <button class="pill active">Notebooks</button>
+          <button class="pill">Consoles</button>
+          <button class="pill">Câmeras</button>
+          <button class="pill">Áudio</button>
+          <button class="pill">Periféricos</button>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-3xl">
+        <div>
+          <div class="text-3xl md:text-4xl font-bold accent-text">12.4k</div>
+          <div class="mono text-xs text-[var(--text-dim)] mt-1">PRODUTOS ATIVOS</div>
+        </div>
+        <div>
+          <div class="text-3xl md:text-4xl font-bold accent-text">8.2k</div>
+          <div class="mono text-xs text-[var(--text-dim)] mt-1">VENDEDORES</div>
+        </div>
+        <div>
+          <div class="text-3xl md:text-4xl font-bold accent-text">98%</div>
+          <div class="mono text-xs text-[var(--text-dim)] mt-1">SATISFAÇÃO</div>
+        </div>
+        <div>
+          <div class="text-3xl md:text-4xl font-bold accent-text">24h</div>
+          <div class="mono text-xs text-[var(--text-dim)] mt-1">TEMPO MÉDIO</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="border-y border-[var(--border)] py-4 overflow-hidden whitespace-nowrap">
+    <div class="scroll-marquee inline-flex gap-12 mono text-sm text-[var(--text-dim)]">
+      <span>★ FRETE GRÁTIS ACIMA DE R$ 500</span>
+      <span class="accent-text">★ GARANTIA TECHBAZAR DE 7 DIAS</span>
+      <span>★ PARCELE EM ATÉ 12X</span>
+      <span class="accent-text">★ VENDEDORES VERIFICADOS</span>
+      <span>★ FRETE GRÁTIS ACIMA DE R$ 500</span>
+      <span class="accent-text">★ GARANTIA TECHBAZAR DE 7 DIAS</span>
+      <span>★ PARCELE EM ATÉ 12X</span>
+      <span class="accent-text">★ VENDEDORES VERIFICADOS</span>
+    </div>
+  </div>
+
+  <!-- PRODUTOS -->
+  <section class="max-w-7xl mx-auto px-6 py-20">
+    <div class="flex items-end justify-between mb-10">
+      <div>
+        <div class="mono text-xs text-[var(--text-dim)] mb-3 tracking-widest">// EM DESTAQUE</div>
+        <h2 class="text-3xl md:text-5xl font-bold tracking-tight">Achados<br>da semana.</h2>
+      </div>
+      <a href="#" class="hidden md:flex items-center gap-2 text-sm hover:accent-text transition group">
+        Ver todos
+        <span class="group-hover:translate-x-1 transition">→</span>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <!-- CARD 1 -->
+      <article class="card rounded-sm overflow-hidden group cursor-pointer">
+        <div class="product-img aspect-square flex items-center justify-center text-7xl float">📱</div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="badge-condition accent-bg">SEMINOVO</span>
+            <span class="mono text-xs text-[var(--text-dim)]">SP</span>
+          </div>
+          <h3 class="font-semibold mb-1 leading-snug">iPhone 13 Pro 256GB</h3>
+          <p class="text-xs text-[var(--text-dim)] mb-4">Bateria 92% • Sem riscos</p>
+          <div class="flex items-end justify-between">
+            <div>
+              <div class="text-xs text-[var(--text-dim)] line-through">R$ 4.299</div>
+              <div class="text-xl font-bold accent-text">R$ 3.450</div>
+            </div>
+            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 2 -->
+      <article class="card rounded-sm overflow-hidden group cursor-pointer">
+        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 0.5s">💻</div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="badge-condition border border-[var(--border)] text-[var(--text-dim)]">USADO</span>
+            <span class="mono text-xs text-[var(--text-dim)]">RJ</span>
+          </div>
+          <h3 class="font-semibold mb-1 leading-snug">MacBook Air M1 8GB</h3>
+          <p class="text-xs text-[var(--text-dim)] mb-4">2020 • Caixa original</p>
+          <div class="flex items-end justify-between">
+            <div>
+              <div class="text-xs text-[var(--text-dim)] line-through">R$ 6.500</div>
+              <div class="text-xl font-bold accent-text">R$ 4.890</div>
+            </div>
+            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 3 -->
+      <article class="card rounded-sm overflow-hidden group cursor-pointer">
+        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 1s">🎮</div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="badge-condition accent-bg">SEMINOVO</span>
+            <span class="mono text-xs text-[var(--text-dim)]">MG</span>
+          </div>
+          <h3 class="font-semibold mb-1 leading-snug">PlayStation 5 Slim</h3>
+          <p class="text-xs text-[var(--text-dim)] mb-4">2 controles • 3 jogos</p>
+          <div class="flex items-end justify-between">
+            <div>
+              <div class="text-xs text-[var(--text-dim)] line-through">R$ 4.799</div>
+              <div class="text-xl font-bold accent-text">R$ 3.299</div>
+            </div>
+            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 4 -->
+      <article class="card rounded-sm overflow-hidden group cursor-pointer">
+        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 1.5s">🎧</div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="badge-condition accent-bg">NOVO</span>
+            <span class="mono text-xs text-[var(--text-dim)]">PR</span>
+          </div>
+          <h3 class="font-semibold mb-1 leading-snug">Sony WH-1000XM5</h3>
+          <p class="text-xs text-[var(--text-dim)] mb-4">Lacrado • Garantia</p>
+          <div class="flex items-end justify-between">
+            <div>
+              <div class="text-xs text-[var(--text-dim)] line-through">R$ 2.799</div>
+              <div class="text-xl font-bold accent-text">R$ 2.190</div>
+            </div>
+            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 5 -->
+      <article class="card rounded-sm overflow-hidden group cursor-pointer">
+        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 2s">📷</div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="badge-condition border border-[var(--border)] text-[var(--text-dim)]">USADO</span>
+            <span class="mono text-xs text-[var(--text-dim)]">SC</span>
+          </div>
+          <h3 class="font-semibold mb-1 leading-snug">Canon EOS M50 Mark II</h3>
+          <p class="text-xs text-[var(--text-dim)] mb-4">Lente 15-45mm + bolsa</p>
+          <div class="flex items-end justify-between">
+            <div>
+              <div class="text-xs text-[var(--text-dim)] line-through">R$ 4.200</div>
+              <div class="text-xl font-bold accent-text">R$ 2.850</div>
+            </div>
+            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 6 -->
+      <article class="card rounded-sm overflow-hidden group cursor-pointer">
+        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 2.5s">⌚</div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="badge-condition accent-bg">SEMINOVO</span>
+            <span class="mono text-xs text-[var(--text-dim)]">RS</span>
+          </div>
+          <h3 class="font-semibold mb-1 leading-snug">Apple Watch Series 8</h3>
+          <p class="text-xs text-[var(--text-dim)] mb-4">45mm GPS • Pulseira extra</p>
+          <div class="flex items-end justify-between">
+            <div>
+              <div class="text-xs text-[var(--text-dim)] line-through">R$ 3.299</div>
+              <div class="text-xl font-bold accent-text">R$ 2.450</div>
+            </div>
+            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 7 -->
+      <article class="card rounded-sm overflow-hidden group cursor-pointer">
+        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 3s">🖥️</div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="badge-condition border border-[var(--border)] text-[var(--text-dim)]">USADO</span>
+            <span class="mono text-xs text-[var(--text-dim)]">DF</span>
+          </div>
+          <h3 class="font-semibold mb-1 leading-snug">Monitor LG UltraGear 27"</h3>
+          <p class="text-xs text-[var(--text-dim)] mb-4">144Hz • IPS • 1ms</p>
+          <div class="flex items-end justify-between">
+            <div>
+              <div class="text-xs text-[var(--text-dim)] line-through">R$ 2.499</div>
+              <div class="text-xl font-bold accent-text">R$ 1.690</div>
+            </div>
+            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 8 -->
+      <article class="card rounded-sm overflow-hidden group cursor-pointer">
+        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 3.5s">⌨️</div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="badge-condition accent-bg">SEMINOVO</span>
+            <span class="mono text-xs text-[var(--text-dim)]">BA</span>
+          </div>
+          <h3 class="font-semibold mb-1 leading-snug">Keychron K2 V2 RGB</h3>
+          <p class="text-xs text-[var(--text-dim)] mb-4">Brown switch • Hot-swap</p>
+          <div class="flex items-end justify-between">
+            <div>
+              <div class="text-xs text-[var(--text-dim)] line-through">R$ 1.350</div>
+              <div class="text-xl font-bold accent-text">R$ 890</div>
+            </div>
+            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="mt-10 text-center">
+      <button class="border border-[var(--border)] hover:border-[var(--accent)] hover:accent-text px-8 py-3 rounded-sm transition">
+        Carregar mais produtos
+      </button>
+    </div>
+  </section>
+
+  <!-- CTA VENDA -->
+  <section class="max-w-7xl mx-auto px-6 py-20">
+    <div class="card rounded-sm p-10 md:p-16 relative overflow-hidden">
+      <div class="absolute top-0 right-0 text-[12rem] md:text-[20rem] font-bold text-[var(--border)] leading-none select-none -mr-8 -mt-8">$</div>
+      <div class="relative">
+        <div class="mono text-xs text-[var(--text-dim)] mb-4 tracking-widest">// VENDA NO TECHBAZAR</div>
+        <h2 class="text-4xl md:text-6xl font-bold tracking-tight mb-4 max-w-2xl">
+          Tem algo parado<br>
+          <span class="accent-text">virando poeira?</span>
+        </h2>
+        <p class="text-[var(--text-dim)] text-lg max-w-xl mb-8">
+          Anuncie em 2 minutos. Sem taxa de cadastro. Receba quando vender.
+        </p>
+        <button class="accent-bg px-8 py-4 rounded-sm font-semibold hover:bg-[var(--accent-dim)] transition">
+          Anunciar agora →
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-[var(--border)] mt-10">
+    <div class="max-w-7xl mx-auto px-6 py-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-7 h-7 accent-bg flex items-center justify-center font-bold rounded-sm">T</div>
+            <span class="font-bold">TechBazar<span class="accent-text">.</span></span>
+          </div>
+          <p class="text-xs text-[var(--text-dim)]">O marketplace honesto de eletrônicos usados.</p>
+        </div>
+        <div>
+          <div class="mono text-xs text-[var(--text-dim)] mb-3">EXPLORAR</div>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:accent-text transition">Categorias</a></li>
+            <li><a href="#" class="hover:accent-text transition">Ofertas</a></li>
+            <li><a href="#" class="hover:accent-text transition">Mais vendidos</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="mono text-xs text-[var(--text-dim)] mb-3">CONTA</div>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:accent-text transition">Entrar</a></li>
+            <li><a href="#" class="hover:accent-text transition">Cadastro</a></li>
+            <li><a href="#" class="hover:accent-text transition">Meus pedidos</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="mono text-xs text-[var(--text-dim)] mb-3">SUPORTE</div>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:accent-text transition">FAQ</a></li>
+            <li><a href="#" class="hover:accent-text transition">Contato</a></li>
+            <li><a href="#" class="hover:accent-text transition">Política de privacidade</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-[var(--border)] pt-6 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-[var(--text-dim)] mono">
+        <div>© 2026 TECHBAZAR / TODOS OS DIREITOS RESERVADOS</div>
+        <div>BUILT WITH ⚡ &amp; CAFFEINE</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
