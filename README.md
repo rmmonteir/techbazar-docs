@@ -118,9 +118,11 @@ Projeto desenvolvido por **[Nome do Grupo]** como parte do mini-projeto avaliati
 
 | Integrante | Função |
 |---|---|
-| Nome 1 | Função |
-| Nome 2 | Função |
-| Nome 3 | Função |
+| Rafael Monteiro| CEO |
+| Gisele| CEO |
+| Wagner | CEO |
+| Laun | CEO |
+| Rafael | CEO |
 
 ---
 
