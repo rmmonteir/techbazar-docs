@@ -8,13 +8,18 @@ dependencies = [
     "Django==6.0.5",
     "djangorestframework==3.17.1",
     "psycopg[binary]==3.3.4",
+    "drf-spectacular==0.29.0",
+    "django-cors-headers>=4.4.0",
 ]
 
 [dependency-groups]
 dev = [
     "pytest>=8.3.0",
     "pytest-cov>=5.0.0",
+    "pytest-django>=4.9",
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
+DJANGO_SETTINGS_MODULE = "config.settings"
