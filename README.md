@@ -1,139 +1,206 @@
-# TechBazar 🛒⚡
+# TechBazar
 
-> O marketplace honesto de eletrônicos usados.
+O marketplace honesto de eletronicos usados.
 
-TechBazar é um marketplace simplificado para compra e venda de eletrônicos usados (estilo OLX / Mercado Livre enxuto). Este repositório contém a documentação inicial, diagramação e mockup da home page do projeto.
+Este repositorio comecou como documentacao arquitetural e agora entrou na fase inicial de implementacao com Django.
 
----
+## Sobre o projeto
 
-## 📋 Sobre o Projeto
+TechBazar e um mini-projeto academico focado em um marketplace enxuto de compra e venda de eletronicos usados.
 
-O TechBazar nasceu como um mini-projeto avaliativo focado em planejamento arquitetural, modelagem de banco de dados e prototipação visual. O MVP contempla:
+Escopo do MVP:
 
-- ✅ Cadastro e autenticação de usuários
-- ✅ Listagem e busca de produtos
-- ✅ Carrinho de compras
-- ✅ Fluxo de checkout
+- Cadastro e autenticacao de usuarios
+- Listagem e busca de produtos
+- Carrinho de compras
+- Fluxo de checkout
 
----
-
-## 🏗️ Stack Tecnológica
+## Stack tecnologica
 
 | Camada | Tecnologia |
 |---|---|
-| Backend | Django 5.x + Django REST Framework |
-| Linguagem | Python 3.12+ |
-| Banco de Dados | PostgreSQL 16 |
-| Cache/Sessão | Redis |
+| Backend | Django 6.x + Django REST Framework |
+| Linguagem | Python 3.14 (ambiente local atual) |
+| Banco de Dados | PostgreSQL 16 (com fallback local para SQLite) |
 | Frontend | HTML + Tailwind CSS |
-| Storage | AWS S3 (django-storages) |
-| Containerização | Docker + Docker Compose |
-| CI/CD | GitHub Actions |
 
-> Detalhes completos da decisão arquitetural em [`docs/ADR.md`](docs/ADR.md).
+Detalhes arquiteturais: [docs/ADR.md](docs/ADR.md)
 
----
-
-## 📁 Estrutura do Repositório
+## Estrutura atual
 
 ```
 techbazar-docs/
+├── apps/
+│   ├── core/
+│   └── catalog/
+├── config/
 ├── docs/
-│   ├── ADR.md          # Architectural Decision Record
-│   └── DIAGRAMAS.md    # Diagramas ER e Fluxo (Mermaid)
-├── index.html          # Mockup da home page
+│   ├── ADR.md
+│   ├── erDiagram.md
+│   ├── flowchart-TD.md
+│   └── index.html
+├── manage.py
+├── requirements.txt
 └── README.md
 ```
 
----
+## O que ja foi implementado
 
-## 📐 Documentação
+Fase inicial de CRUD simplificado no app catalog:
 
-### Architectural Decision Record (ADR)
-O arquivo [`docs/ADR.md`](docs/ADR.md) documenta:
-- Contexto do projeto
-- Decisão pelo Monólito Modular em Django
-- Stack completa e justificativas
-- Alternativas consideradas e descartadas
-- Consequências e trade-offs
+- Projeto Django configurado
+- App catalog com modelo Product
+- Validacoes basicas de dominio
+- Django Admin para Product
+- API REST CRUD via DRF
+- Busca por titulo/categoria e ordenacao
+- Seed de dados para demo
 
-### Diagramas
-O arquivo [`docs/DIAGRAMAS.md`](docs/DIAGRAMAS.md) contém:
-- **Diagrama ER**: Entidades Usuário, Produto, Carrinho, Pedido e seus relacionamentos
-- **Diagrama de Fluxo**: Jornada do usuário buscando um produto e adicionando ao carrinho
+Carrinho funcional simples:
 
-> Os diagramas estão em sintaxe Mermaid e renderizam automaticamente no GitHub/GitLab.
+- Carrinho por sessao (sem login obrigatorio)
+- Adicao de item ao carrinho
+- Atualizacao de quantidade
+- Remocao de item
+- Validacao de estoque disponivel
 
-### Mockup
-O arquivo [`index.html`](index.html) é um protótipo funcional da home page com:
-- Barra de busca destacada
-- Cards de produtos com preço, condição e localização
-- Filtros rápidos por categoria
-- CTA para anunciar produtos
+## Modelo Product (resumo)
 
----
+Campos principais:
 
-## 🚀 Como visualizar localmente
+- seller
+- title
+- description
+- price
+- category
+- condition
+- image_url
+- stock
+- is_active
+- created_at
 
-### Mockup HTML
-Basta abrir o arquivo no navegador:
-```bash
-# Linux / macOS
-open index.html
+Regras minimas:
 
-# Windows
-start index.html
+- price deve ser maior que zero
+- stock nao pode ser negativo
+- produto inativo nao pode ser alterado por PUT/PATCH
+
+## Setup local
+
+### 1. Criar e ativar ambiente virtual
+
+Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
 ```
 
-### Diagramas Mermaid
-Os diagramas renderizam automaticamente ao abrir os `.md` no GitHub. Para editar/visualizar isoladamente, cole o código em [mermaid.live](https://mermaid.live).
+### 2. Instalar dependencias
 
----
+```powershell
+pip install -r requirements.txt
+```
 
-## 🗺️ Roadmap
+### 3. Migrar banco
 
-### ✅ Fase 1 — Planejamento (atual)
-- [x] Definição da arquitetura (ADR)
-- [x] Modelagem ER
-- [x] Mockup da home page
+```powershell
+python manage.py makemigrations
+python manage.py migrate
+```
 
-### 🔜 Fase 2 — Implementação
-- [ ] Setup do projeto Django
-- [ ] App `accounts` (cadastro/login)
-- [ ] App `catalog` (CRUD de produtos + busca)
-- [ ] App `cart` (carrinho de compras)
-- [ ] App `orders` (checkout e pedidos)
+### 4. Popular dados iniciais (opcional)
 
-### 🔮 Fase 3 — Evolução
-- [ ] Integração com gateway de pagamento
-- [ ] Sistema de avaliações
-- [ ] Chat entre comprador e vendedor
-- [ ] App mobile
+```powershell
+python manage.py seed_products
+```
 
----
+### 5. Subir servidor
 
-## 👥 Equipe
+```powershell
+python manage.py runserver
+```
 
-Projeto desenvolvido por **[Nome do Grupo]** como parte do mini-projeto avaliativo.
+## Endpoints da API (CRUD inicial)
 
-| Integrante | Função |
-|---|---|
-| Rafael Monteiro| CEO |
-| Gisele| CEO |
-| Wagner | CEO |
-| Laun | CEO |
-| Rafael | CEO |
+Base URL: /api/
 
----
+- GET /api/products/
+- POST /api/products/
+- GET /api/products/{id}/
+- PUT /api/products/{id}/
+- PATCH /api/products/{id}/
+- DELETE /api/products/{id}/
 
-## 📄 Licença
+Filtros suportados na listagem:
 
-Este projeto é acadêmico e está sob licença MIT.
+- search: busca por title e category
+- ordering: price, created_at, title
 
----
+Exemplo:
 
-<div align="center">
+- /api/products/?search=iphone
+- /api/products/?ordering=price
+- /api/products/?ordering=-created_at
 
-**Built with ⚡ & caffeine**
+## Endpoints da API (Carrinho simples)
 
-</div>
+Base URL: /api/cart/
+
+- GET /api/cart/
+- POST /api/cart/items/
+- PATCH /api/cart/items/{item_id}/
+- DELETE /api/cart/items/{item_id}/
+
+Exemplo de payload para adicionar item:
+
+```json
+{
+	"product_id": 1,
+	"quantity": 2
+}
+```
+
+## Testes unitarios
+
+Rodar todos os testes:
+
+```powershell
+python manage.py test
+```
+
+Rodar apenas testes de catalog:
+
+```powershell
+python manage.py test apps.catalog
+```
+
+Rodar apenas testes de carrinho:
+
+```powershell
+python manage.py test apps.cart
+```
+
+## CI/CD
+
+Foi adicionado pipeline no GitHub Actions em .github/workflows/ci.yml com:
+
+- Instalacao de dependencias
+- Execucao de migracoes
+- Execucao de testes
+
+Gatilhos:
+
+- push em main e branches feature/**
+- pull request para main
+
+## Proximos passos
+
+- Implementar app accounts (cadastro/login)
+- Integrar autenticacao nas operacoes de catalog
+- Iniciar app cart
+- Iniciar app orders
+
+## Licenca
+
+Projeto academico sob licenca MIT.

@@ -1,0 +1,20 @@
+[project]
+name = "techbazar-docs"
+version = "0.1.0"
+description = "TechBazar docs and hands-on exercises"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "Django==6.0.5",
+    "djangorestframework==3.17.1",
+    "psycopg[binary]==3.3.4",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-cov>=5.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
