@@ -25,5 +25,8 @@ jobs:
       - name: Sync environment with uv
         run: uv sync --group dev
 
-      - name: Run pytest with coverage gate
-        run: uv run pytest tests --cov=cart --cov-report=term-missing --cov-fail-under=80
+      - name: Run unit tests (ShoppingCart)
+        run: uv run pytest tests/test_cart.py --cov=cart --cov-report=term-missing --cov-fail-under=80
+
+      - name: Run functional API tests (Django)
+        run: uv run pytest tests/test_api_products.py tests/test_api_cart.py --ds=config.settings -v

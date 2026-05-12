@@ -123,8 +123,8 @@
       </nav>
       <div class="flex items-center gap-3">
         <button class="text-sm text-[var(--text-dim)] hover:text-white transition hidden sm:block">Entrar</button>
-        <button class="accent-bg px-4 py-2 rounded-sm font-semibold text-sm hover:bg-[var(--accent-dim)] transition flex items-center gap-2">
-          🛒 <span class="mono text-xs">[0]</span>
+        <button class="accent-bg px-4 py-2 rounded-sm font-semibold text-sm hover:bg-[var(--accent-dim)] transition flex items-center gap-2" id="cart-btn">
+          🛒 <span class="mono text-xs" id="cart-count">[0]</span>
         </button>
       </div>
     </div>
@@ -151,11 +151,12 @@
         <div class="card rounded-sm p-2 flex items-center gap-2">
           <div class="px-4 text-[var(--text-dim)]">🔍</div>
           <input
+            id="search-input"
             type="text"
             placeholder="iPhone 13, PlayStation 5, MacBook Pro..."
             class="flex-1 bg-transparent outline-none py-3 text-base"
           />
-          <button class="accent-bg px-6 py-3 rounded-sm font-semibold text-sm hover:bg-[var(--accent-dim)] transition whitespace-nowrap">
+          <button id="search-btn" class="accent-bg px-6 py-3 rounded-sm font-semibold text-sm hover:bg-[var(--accent-dim)] transition whitespace-nowrap">
             Buscar →
           </button>
         </div>
@@ -163,12 +164,13 @@
         <!-- TAGS RÁPIDAS -->
         <div class="flex flex-wrap gap-2 mt-5">
           <span class="mono text-xs text-[var(--text-dim)] self-center mr-2">populares:</span>
-          <button class="pill">Celulares</button>
-          <button class="pill active">Notebooks</button>
-          <button class="pill">Consoles</button>
-          <button class="pill">Câmeras</button>
-          <button class="pill">Áudio</button>
-          <button class="pill">Periféricos</button>
+          <button class="pill active" data-category="">Todos</button>
+          <button class="pill" data-category="Celulares">Celulares</button>
+          <button class="pill" data-category="Notebooks">Notebooks</button>
+          <button class="pill" data-category="Consoles">Consoles</button>
+          <button class="pill" data-category="Câmeras">Câmeras</button>
+          <button class="pill" data-category="Áudio">Áudio</button>
+          <button class="pill" data-category="Periféricos">Periféricos</button>
         </div>
       </div>
 
@@ -221,168 +223,8 @@
       </a>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-
-      <!-- CARD 1 -->
-      <article class="card rounded-sm overflow-hidden group cursor-pointer">
-        <div class="product-img aspect-square flex items-center justify-center text-7xl float">📱</div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <span class="badge-condition accent-bg">SEMINOVO</span>
-            <span class="mono text-xs text-[var(--text-dim)]">SP</span>
-          </div>
-          <h3 class="font-semibold mb-1 leading-snug">iPhone 13 Pro 256GB</h3>
-          <p class="text-xs text-[var(--text-dim)] mb-4">Bateria 92% • Sem riscos</p>
-          <div class="flex items-end justify-between">
-            <div>
-              <div class="text-xs text-[var(--text-dim)] line-through">R$ 4.299</div>
-              <div class="text-xl font-bold accent-text">R$ 3.450</div>
-            </div>
-            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 2 -->
-      <article class="card rounded-sm overflow-hidden group cursor-pointer">
-        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 0.5s">💻</div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <span class="badge-condition border border-[var(--border)] text-[var(--text-dim)]">USADO</span>
-            <span class="mono text-xs text-[var(--text-dim)]">RJ</span>
-          </div>
-          <h3 class="font-semibold mb-1 leading-snug">MacBook Air M1 8GB</h3>
-          <p class="text-xs text-[var(--text-dim)] mb-4">2020 • Caixa original</p>
-          <div class="flex items-end justify-between">
-            <div>
-              <div class="text-xs text-[var(--text-dim)] line-through">R$ 6.500</div>
-              <div class="text-xl font-bold accent-text">R$ 4.890</div>
-            </div>
-            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 3 -->
-      <article class="card rounded-sm overflow-hidden group cursor-pointer">
-        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 1s">🎮</div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <span class="badge-condition accent-bg">SEMINOVO</span>
-            <span class="mono text-xs text-[var(--text-dim)]">MG</span>
-          </div>
-          <h3 class="font-semibold mb-1 leading-snug">PlayStation 5 Slim</h3>
-          <p class="text-xs text-[var(--text-dim)] mb-4">2 controles • 3 jogos</p>
-          <div class="flex items-end justify-between">
-            <div>
-              <div class="text-xs text-[var(--text-dim)] line-through">R$ 4.799</div>
-              <div class="text-xl font-bold accent-text">R$ 3.299</div>
-            </div>
-            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 4 -->
-      <article class="card rounded-sm overflow-hidden group cursor-pointer">
-        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 1.5s">🎧</div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <span class="badge-condition accent-bg">NOVO</span>
-            <span class="mono text-xs text-[var(--text-dim)]">PR</span>
-          </div>
-          <h3 class="font-semibold mb-1 leading-snug">Sony WH-1000XM5</h3>
-          <p class="text-xs text-[var(--text-dim)] mb-4">Lacrado • Garantia</p>
-          <div class="flex items-end justify-between">
-            <div>
-              <div class="text-xs text-[var(--text-dim)] line-through">R$ 2.799</div>
-              <div class="text-xl font-bold accent-text">R$ 2.190</div>
-            </div>
-            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 5 -->
-      <article class="card rounded-sm overflow-hidden group cursor-pointer">
-        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 2s">📷</div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <span class="badge-condition border border-[var(--border)] text-[var(--text-dim)]">USADO</span>
-            <span class="mono text-xs text-[var(--text-dim)]">SC</span>
-          </div>
-          <h3 class="font-semibold mb-1 leading-snug">Canon EOS M50 Mark II</h3>
-          <p class="text-xs text-[var(--text-dim)] mb-4">Lente 15-45mm + bolsa</p>
-          <div class="flex items-end justify-between">
-            <div>
-              <div class="text-xs text-[var(--text-dim)] line-through">R$ 4.200</div>
-              <div class="text-xl font-bold accent-text">R$ 2.850</div>
-            </div>
-            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 6 -->
-      <article class="card rounded-sm overflow-hidden group cursor-pointer">
-        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 2.5s">⌚</div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <span class="badge-condition accent-bg">SEMINOVO</span>
-            <span class="mono text-xs text-[var(--text-dim)]">RS</span>
-          </div>
-          <h3 class="font-semibold mb-1 leading-snug">Apple Watch Series 8</h3>
-          <p class="text-xs text-[var(--text-dim)] mb-4">45mm GPS • Pulseira extra</p>
-          <div class="flex items-end justify-between">
-            <div>
-              <div class="text-xs text-[var(--text-dim)] line-through">R$ 3.299</div>
-              <div class="text-xl font-bold accent-text">R$ 2.450</div>
-            </div>
-            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 7 -->
-      <article class="card rounded-sm overflow-hidden group cursor-pointer">
-        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 3s">🖥️</div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <span class="badge-condition border border-[var(--border)] text-[var(--text-dim)]">USADO</span>
-            <span class="mono text-xs text-[var(--text-dim)]">DF</span>
-          </div>
-          <h3 class="font-semibold mb-1 leading-snug">Monitor LG UltraGear 27"</h3>
-          <p class="text-xs text-[var(--text-dim)] mb-4">144Hz • IPS • 1ms</p>
-          <div class="flex items-end justify-between">
-            <div>
-              <div class="text-xs text-[var(--text-dim)] line-through">R$ 2.499</div>
-              <div class="text-xl font-bold accent-text">R$ 1.690</div>
-            </div>
-            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 8 -->
-      <article class="card rounded-sm overflow-hidden group cursor-pointer">
-        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay: 3.5s">⌨️</div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <span class="badge-condition accent-bg">SEMINOVO</span>
-            <span class="mono text-xs text-[var(--text-dim)]">BA</span>
-          </div>
-          <h3 class="font-semibold mb-1 leading-snug">Keychron K2 V2 RGB</h3>
-          <p class="text-xs text-[var(--text-dim)] mb-4">Brown switch • Hot-swap</p>
-          <div class="flex items-end justify-between">
-            <div>
-              <div class="text-xs text-[var(--text-dim)] line-through">R$ 1.350</div>
-              <div class="text-xl font-bold accent-text">R$ 890</div>
-            </div>
-            <button class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition">+</button>
-          </div>
-        </div>
-      </article>
-
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <p class="col-span-4 text-center text-[var(--text-dim)] mono text-sm py-10">Carregando produtos...</p>
     </div>
 
     <div class="mt-10 text-center">
@@ -455,5 +297,144 @@
     </div>
   </footer>
 
+<script>
+  const API = 'http://localhost:8001';
+  const EMOJI_MAP = {
+    'Celulares': '📱', 'Notebooks': '💻', 'Consoles': '🎮',
+    'Câmeras': '📷', 'Áudio': '🎧', 'Periféricos': '⌨️',
+    'Monitores': '🖥️', 'Smartwatches': '⌚',
+  };
+  const CONDITION_LABEL = { novo: 'NOVO', usado: 'USADO', seminovo: 'SEMINOVO' };
+
+  let cartCount = 0;
+  let debounceTimer;
+
+  // ── Render helpers ──────────────────────────────────────────────
+  function conditionBadge(condition) {
+    const label = CONDITION_LABEL[condition] || condition.toUpperCase();
+    if (condition === 'usado') {
+      return `<span class="badge-condition border border-[var(--border)] text-[var(--text-dim)]">${label}</span>`;
+    }
+    return `<span class="badge-condition accent-bg">${label}</span>`;
+  }
+
+  function productCard(p, delay) {
+    const emoji = EMOJI_MAP[p.category] || '📦';
+    const price = parseFloat(p.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    return `
+      <article class="card rounded-sm overflow-hidden group cursor-pointer">
+        <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay:${delay}s">${emoji}</div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            ${conditionBadge(p.condition)}
+            <span class="mono text-xs text-[var(--text-dim)]">${p.category}</span>
+          </div>
+          <h3 class="font-semibold mb-1 leading-snug">${p.title}</h3>
+          <p class="text-xs text-[var(--text-dim)] mb-4 line-clamp-2">${p.description}</p>
+          <div class="flex items-end justify-between">
+            <div>
+              <div class="text-xl font-bold accent-text">${price}</div>
+              <div class="mono text-xs text-[var(--text-dim)] mt-1">Estoque: ${p.stock}</div>
+            </div>
+            <button
+              class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition"
+              onclick="addToCart(${p.id}, event)"
+              ${p.stock === 0 ? 'disabled style="opacity:0.4;cursor:not-allowed"' : ''}
+            >+</button>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  // ── Fetch products ───────────────────────────────────────────────
+  async function loadProducts(search = '') {
+    const grid = document.getElementById('product-grid');
+    grid.innerHTML = '<p class="col-span-4 text-center text-[var(--text-dim)] mono text-sm py-10">Carregando...</p>';
+    try {
+      const url = search
+        ? `${API}/api/products/?search=${encodeURIComponent(search)}`
+        : `${API}/api/products/`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+      const products = data.results ?? data;
+      if (!products.length) {
+        grid.innerHTML = '<p class="col-span-4 text-center text-[var(--text-dim)] mono text-sm py-10">Nenhum produto encontrado.</p>';
+        return;
+      }
+      grid.innerHTML = products.map((p, i) => productCard(p, i * 0.3)).join('');
+    } catch (e) {
+      grid.innerHTML = `<p class="col-span-4 text-center text-red-400 mono text-sm py-10">Erro ao conectar na API (${e.message}). Verifique se o servidor está rodando em ${API}</p>`;
+    }
+  }
+
+  // ── Fetch cart count ────────────────────────────────────────────
+  async function refreshCartCount() {
+    try {
+      const res = await fetch(`${API}/api/cart/`, { credentials: 'include' });
+      if (!res.ok) return;
+      const data = await res.json();
+      cartCount = data.total_items ?? 0;
+      document.getElementById('cart-count').textContent = `[${cartCount}]`;
+    } catch { /* offline */ }
+  }
+
+  // ── Add to cart ─────────────────────────────────────────────────
+  async function addToCart(productId, e) {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    btn.textContent = '✓';
+    try {
+      const res = await fetch(`${API}/api/cart/items/`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product_id: productId, quantity: 1 }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        cartCount = data.total_items ?? cartCount + 1;
+        document.getElementById('cart-count').textContent = `[${cartCount}]`;
+      } else {
+        const err = await res.json();
+        alert(err.detail || 'Erro ao adicionar ao carrinho.');
+      }
+    } catch {
+      alert('Não foi possível conectar à API.');
+    } finally {
+      setTimeout(() => { btn.disabled = false; btn.textContent = '+'; }, 1000);
+    }
+  }
+
+  // ── Search ──────────────────────────────────────────────────────
+  document.getElementById('search-input').addEventListener('input', (e) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => loadProducts(e.target.value), 300);
+  });
+
+  document.getElementById('search-btn').addEventListener('click', () => {
+    loadProducts(document.getElementById('search-input').value);
+  });
+
+  // ── Category pills ──────────────────────────────────────────────
+  document.querySelectorAll('.pill[data-category]').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.pill[data-category]').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      const searchInput = document.getElementById('search-input');
+      searchInput.value = pill.dataset.category;
+      loadProducts(pill.dataset.category);
+    });
+  });
+
+  // ── Cart button ─────────────────────────────────────────────────
+  document.getElementById('cart-btn').addEventListener('click', () => {
+    window.open(`${API}/api/cart/`, '_blank');
+  });
+
+  // ── Init ────────────────────────────────────────────────────────
+  loadProducts();
+  refreshCartCount();
+</script>
 </body>
 </html>
