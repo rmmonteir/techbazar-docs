@@ -4,9 +4,9 @@ Histórico resumido de cada PR mergeado na branch `main` e branches de feature a
 
 ---
 
-## [feature/hands-on-3-e2e-risco] — Em desenvolvimento · 2026-05-15
+## PR #4 — `feature/hands-on-3-e2e-risco` → `main` · 2026-05-15
 
-**Branch:** `feature/hands-on-3-e2e-risco` · **Commit:** `7c0aa4b`
+**Branch:** `feature/hands-on-3-e2e-risco` · **Commits:** `7c0aa4b` → `d6b00a1`
 
 Exercício Hands-on 3 da disciplina: testes E2E com Playwright, coleção REST Client e análise preditiva de risco de código.
 
@@ -15,12 +15,16 @@ Exercício Hands-on 3 da disciplina: testes E2E com Playwright, coleção REST C
 | Testes E2E (Playwright Python) | `tests/test_e2e.py` — 10/10 passando |
 | Coleção REST Client | `docs/techbazar-api.http` — 14 cenários |
 | Análise de Risco | `docs/RISK_ANALYSIS.md` |
+| Histórico do projeto | `docs/CHANGELOG.md` |
+| PR template | `.github/pull_request_template.md` |
 
 **O que mudou:**
-- `docs/index.html` — URL da API corrigida para relativa; atributos `data-testid` adicionados em 5 elementos interativos (seletores estáveis para E2E)
-- `config/urls.py` — rota `/app/` via `TemplateView` (frontend acessível pelo servidor Django)
-- `config/settings.py` — diretório `docs/` adicionado ao `TEMPLATES DIRS`
-- `requirements.txt` + `pyproject.toml` — `playwright`, `pytest-playwright`, `base_url` configurado
+- `docs/index.html` — URL da API corrigida para relativa; `data-testid` em 5 elementos interativos
+- `config/urls.py` + `config/settings.py` — frontend servido pelo Django em `/app/`
+- `requirements.txt` + `pyproject.toml` — `playwright`, `pytest-playwright`, `base_url`
+- `README.md` — seção de testes reescrita com 3 camadas (unitários, integração, E2E)
+- `CLAUDE.md` — workflow de PR obrigatório: atualizar CHANGELOG antes de abrir PR
+- `.github/pull_request_template.md` — checklist de PR criado
 
 **Módulo de maior risco identificado:** `ShoppingCart.discount_amount` em `cart.py` (score 25 — CC=5 × FA=5)
 
