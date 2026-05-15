@@ -1,0 +1,172 @@
+### TechBazar API — REST Client Collection
+### Instale a extensão "REST Client" (humao.rest-client) no VS Code para executar.
+### Cada cenário mostra o status code esperado como comentário.
+
+@base = http://localhost:8000
+@contentType = application/json
+
+# ─────────────────────────────────────────────
+# PRODUTOS
+# ─────────────────────────────────────────────
+
+### [200] Listar produtos (paginado)
+GET {{base}}/api/products/
+Accept: application/json
+
+###
+
+### [200] Listar produtos com busca por título
+GET {{base}}/api/products/?search=notebook
+Accept: application/json
+
+###
+
+### [200] Listar produtos ordenados por preço crescente
+GET {{base}}/api/products/?ordering=price
+Accept: application/json
+
+###
+
+### [201] Criar produto válido
+# @name createProduct
+POST {{base}}/api/products/
+Content-Type: {{contentType}}
+
+{
+  "title": "MacBook Air M2",
+  "description": "Notebook Apple em ótimo estado, com carregador original.",
+  "price": "4500.00",
+  "category": "Notebooks",
+  "condition": "seminovo",
+  "stock": 2
+}
+
+###
+
+@productId = {{createProduct.response.body.id}}
+
+### [200] Detalhar produto criado
+GET {{base}}/api/products/{{productId}}/
+Accept: application/json
+
+###
+
+### [200] Atualizar parcialmente o produto (PATCH)
+PATCH {{base}}/api/products/{{productId}}/
+Content-Type: {{contentType}}
+
+{
+  "price": "4200.00",
+  "stock": 1
+}
+
+###
+
+### [400] Criar produto com preço negativo (deve rejeitar)
+POST {{base}}/api/products/
+Content-Type: {{contentType}}
+
+{
+  "title": "Produto Inválido",
+  "description": "Teste de validação.",
+  "price": "-50.00",
+  "category": "Outros",
+  "condition": "novo",
+  "stock": 1
+}
+
+###
+
+### [400] Criar produto sem campos obrigatórios (deve rejeitar)
+POST {{base}}/api/products/
+Content-Type: {{contentType}}
+
+{
+  "description": "Sem título e sem preço"
+}
+
+###
+
+### [404] Produto inexistente
+GET {{base}}/api/products/99999/
+Accept: application/json
+
+###
+
+# ─────────────────────────────────────────────
+# CARRINHO
+# ─────────────────────────────────────────────
+
+### [200] Ver carrinho atual (cria sessão automaticamente se vazia)
+GET {{base}}/api/cart/
+Accept: application/json
+
+###
+
+### [201] Adicionar produto ao carrinho
+# @name addItem
+POST {{base}}/api/cart/items/
+Content-Type: {{contentType}}
+
+{
+  "product_id": {{productId}},
+  "quantity": 1
+}
+
+###
+
+@itemId = {{addItem.response.body.items[0].id}}
+
+### [200] Atualizar quantity do item no carrinho
+PATCH {{base}}/api/cart/items/{{itemId}}/
+Content-Type: {{contentType}}
+
+{
+  "quantity": 2
+}
+
+###
+
+### [400] Adicionar com quantity acima do estoque (deve rejeitar)
+POST {{base}}/api/cart/items/
+Content-Type: {{contentType}}
+
+{
+  "product_id": {{productId}},
+  "quantity": 9999
+}
+
+###
+
+### [400] Adicionar produto inexistente ao carrinho (deve rejeitar)
+POST {{base}}/api/cart/items/
+Content-Type: {{contentType}}
+
+{
+  "product_id": 99999,
+  "quantity": 1
+}
+
+###
+
+### [200] Ver carrinho atualizado com totais
+GET {{base}}/api/cart/
+Accept: application/json
+
+###
+
+### [204] Remover item do carrinho
+DELETE {{base}}/api/cart/items/{{itemId}}/
+
+###
+
+### [200] Confirmar carrinho vazio após remoção
+GET {{base}}/api/cart/
+Accept: application/json
+
+###
+
+### [204] Deletar produto criado nos testes (limpeza)
+DELETE {{base}}/api/products/{{productId}}/
+
+###
