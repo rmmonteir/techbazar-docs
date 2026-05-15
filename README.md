@@ -161,25 +161,58 @@ Exemplo de payload para adicionar item:
 }
 ```
 
-## Testes unitarios
+## Testes
 
-Rodar todos os testes:
+O projeto usa **pytest** com três camadas de testes:
 
-```powershell
-python manage.py test
-```
+| Tipo | Localização | O que cobre |
+|------|------------|-------------|
+| Unitários | `tests/test_cart.py` | Lógica em memória de `ShoppingCart` |
+| Integração / API | `tests/test_api_products.py`, `tests/test_api_cart.py` | Endpoints REST via cliente HTTP |
+| E2E (Playwright) | `tests/test_e2e.py` | Frontend `/app/` no Chromium headless |
 
-Rodar apenas testes de catalog:
-
-```powershell
-python manage.py test apps.catalog
-```
-
-Rodar apenas testes de carrinho:
+### Rodar todos os testes (unitários + integração)
 
 ```powershell
-python manage.py test apps.cart
+pytest
 ```
+
+### Rodar uma suíte específica
+
+```powershell
+pytest tests/test_cart.py          # unitários — ShoppingCart
+pytest tests/test_api_products.py  # API de produtos
+pytest tests/test_api_cart.py      # API do carrinho
+pytest apps/catalog/tests.py       # testes de modelo (catalog)
+pytest apps/cart/tests.py          # testes de modelo (cart)
+```
+
+### Rodar testes E2E (Playwright)
+
+> **Pré-requisito:** servidor rodando em `http://localhost:8000`
+
+```powershell
+# 1ª vez — baixar o browser
+playwright install chromium
+
+# Rodar headless (padrão CI)
+pytest tests/test_e2e.py -v
+
+# Rodar com browser visível
+pytest tests/test_e2e.py -v --headed
+```
+
+### Rodar com relatório de cobertura
+
+```powershell
+pytest --cov=apps --cov-report=term-missing
+```
+
+### Testes manuais de API (REST Client)
+
+Abra `docs/techbazar-api.http` no VS Code com a extensão
+[REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+e clique em **Send Request** em cada cenário. Requer servidor rodando em `:8000`.
 
 ## CI/CD
 

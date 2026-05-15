@@ -3,3 +3,5 @@ djangorestframework==3.17.1
 psycopg[binary]==3.3.4
 drf-spectacular==0.29.0
 django-cors-headers>=4.4.0
+playwright>=1.44
+pytest-playwright>=0.5

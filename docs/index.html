@@ -124,7 +124,7 @@
       <div class="flex items-center gap-3">
         <button class="text-sm text-[var(--text-dim)] hover:text-white transition hidden sm:block">Entrar</button>
         <button class="accent-bg px-4 py-2 rounded-sm font-semibold text-sm hover:bg-[var(--accent-dim)] transition flex items-center gap-2" id="cart-btn">
-          🛒 <span class="mono text-xs" id="cart-count">[0]</span>
+          <span class="mono text-xs" id="cart-count" data-testid="cart-count">[0]</span>
         </button>
       </div>
     </div>
@@ -152,6 +152,7 @@
           <div class="px-4 text-[var(--text-dim)]">🔍</div>
           <input
             id="search-input"
+            data-testid="search-input"
             type="text"
             placeholder="iPhone 13, PlayStation 5, MacBook Pro..."
             class="flex-1 bg-transparent outline-none py-3 text-base"
@@ -223,7 +224,7 @@
       </a>
     </div>
 
-    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div id="product-grid" data-testid="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
       <p class="col-span-4 text-center text-[var(--text-dim)] mono text-sm py-10">Carregando produtos...</p>
     </div>
 
@@ -298,7 +299,7 @@
   </footer>
 
 <script>
-  const API = 'http://localhost:8001';
+  const API = '';
   const EMOJI_MAP = {
     'Celulares': '📱', 'Notebooks': '💻', 'Consoles': '🎮',
     'Câmeras': '📷', 'Áudio': '🎧', 'Periféricos': '⌨️',
@@ -322,7 +323,7 @@
     const emoji = EMOJI_MAP[p.category] || '📦';
     const price = parseFloat(p.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     return `
-      <article class="card rounded-sm overflow-hidden group cursor-pointer">
+      <article class="card rounded-sm overflow-hidden group cursor-pointer" data-testid="product-card">
         <div class="product-img aspect-square flex items-center justify-center text-7xl float" style="animation-delay:${delay}s">${emoji}</div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -338,6 +339,7 @@
             </div>
             <button
               class="accent-bg w-9 h-9 rounded-sm flex items-center justify-center font-bold hover:bg-[var(--accent-dim)] transition"
+              data-testid="add-to-cart-btn"
               onclick="addToCart(${p.id}, event)"
               ${p.stock === 0 ? 'disabled style="opacity:0.4;cursor:not-allowed"' : ''}
             >+</button>

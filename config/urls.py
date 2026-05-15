@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/api/docs/', permanent=False)),
+    path('app/', TemplateView.as_view(template_name='index.html'), name='app'),
     path('admin/', admin.site.urls),
     path('api/', include('apps.catalog.urls')),
     path('api/cart/', include('apps.cart.urls')),
